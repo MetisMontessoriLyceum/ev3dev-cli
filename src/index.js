@@ -23,13 +23,17 @@ function printHelp() {
   ]));
 }
 
-const { command } = commandLineCommands([null, 'init', 'help']);
+function main() {
+  const { command } = commandLineCommands([null, 'init', 'help']);
 
-switch (command) {
-  case 'init':
-    console.log('will be implemented soon');
-    break;
-  case 'help':
-  default:
-    printHelp();
+  switch (command) {
+    case 'init':
+      console.log('will be implemented soon');
+      break;
+    case 'help':
+    default:
+      printHelp();
+  }
 }
+
+module.exports = { main };
