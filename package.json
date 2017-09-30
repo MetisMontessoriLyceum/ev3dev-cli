@@ -2,6 +2,9 @@
   "name": "nloomans-ev3dev",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "build": "nexe -i src/index.js --fakeArgv -o ev3dev"
+  },
   "license": "MIT",
   "dependencies": {
     "colors": "^1.1.2",

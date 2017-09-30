@@ -1,6 +1,6 @@
 const colors = require('colors');
 
-module.exports.status = (text_, isImportant) => {
+module.exports = (text_, isImportant) => {
   const isError = text_ instanceof Error;
 
   let text;
