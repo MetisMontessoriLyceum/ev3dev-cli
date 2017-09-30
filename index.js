@@ -6,8 +6,6 @@ const readline = require('readline');
 
 const status = require('./src/status');
 
-status('version: v0.0.1');
-
 const gitFactory = require('./src/git');
 
 const git = {
@@ -20,8 +18,8 @@ const git = {
 
 const ask = require('./src/ask').makeAsk({ readline });
 
-const readConfig = require('./src/config').makeReadConfig({ fs, cwd: process.cwd });
-const writeConfig = require('./src/config').makeWriteConfig({ fs, cwd: process.cwd });
+const readConfig = require('./src/config').makeReadConfig({ fs, cwd: process.cwd, exit: process.exit });
+const writeConfig = require('./src/config').makeWriteConfig({ fs, cwd: process.cwd, exit: process.exit });
 
 const getProjectName = require('./src/config').makeGetProjectName({
   status, ask, readConfig, writeConfig,
@@ -32,6 +30,7 @@ const initRepo = require('./src/init').makeInitRepo({
   status,
   ask,
   getProjectName,
+  exit: process.exit,
 });
 
 const main = require('./src/index').makeMain({

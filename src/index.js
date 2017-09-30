@@ -23,6 +23,8 @@ const printHelp = () => {
 };
 
 const makeMain = ({ commandLineCommands, status, initRepo }) => () => {
+  status('version: v0.0.1');
+
   try {
     const { command } = commandLineCommands([null, 'init-repo', 'help']);
 
