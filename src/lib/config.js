@@ -1,7 +1,7 @@
 const path = require('path');
 const yaml = require('js-yaml');
 
-const makeGetProjectName = ({
+module.exports.makeGetProjectName = ({
   status,
   ask,
   readConfig,
@@ -32,11 +32,8 @@ const makeGetProjectName = ({
   return projectName;
 };
 
-const makeReadConfig = ({ fs, cwd }) => () =>
+module.exports.makeReadConfig = ({ fs, cwd }) => () =>
   yaml.safeLoad(fs.readFileSync(path.join(cwd(), 'ev3dev.yml'), 'utf-8'));
 
-const makeWriteConfig = ({ fs, cwd }) => config =>
+module.exports.makeWriteConfig = ({ fs, cwd }) => config =>
   fs.writeFileSync(path.join(cwd(), 'ev3dev.yml'), yaml.safeDump(config));
-
-
-module.exports = { makeReadConfig, makeWriteConfig, makeGetProjectName };

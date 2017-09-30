@@ -1,6 +1,6 @@
 const colors = require('colors');
 
-const makeAsk = ({ readline }) => (question, options) => new Promise((resolve) => {
+module.exports.makeAsk = ({ readline }) => (question, options) => new Promise((resolve) => {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -23,5 +23,3 @@ const makeAsk = ({ readline }) => (question, options) => new Promise((resolve) =
     resolve(answer);
   });
 });
-
-module.exports = { makeAsk };

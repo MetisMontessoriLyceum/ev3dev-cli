@@ -1,45 +1,62 @@
-const commandLineUsage = require('command-line-usage');
+const commandLineCommands = require('command-line-commands');
+const { spawn } = require('child_process');
+const fs = require('fs');
+const commandExistsSync = require('command-exists').sync;
+const readline = require('readline');
 
-const printHelp = () => {
-  console.log(commandLineUsage([
-    {
-      header: 'nloomans\'s ev3dev cli tool',
-      content: 'Helps you setup an ev3dev workflow',
-    },
-    {
-      header: 'Command List',
-      content: [
-        {
-          name: 'init-repo',
-          description: 'Set up the current git repository',
-        },
-        {
-          name: 'help',
-          description: 'Print this',
-        },
-      ],
-    },
-  ]));
-};
+// lib/status.js
+const status = require('./lib/status');
 
-const makeMain = ({ commandLineCommands, status, initRepo }) => () => {
-  status('version: v0.0.1');
+// lib/git.js
+const gitFactory = require('./lib/git');
 
-  try {
-    const { command } = commandLineCommands([null, 'init-repo', 'help']);
+const isGitInstalled = gitFactory.makeIsGitInstalled({ commandExistsSync });
+const isInGitRepo = gitFactory.makeIsInGitRepo({ fs, cwd: process.cwd });
+const isGitRemoteSetup = gitFactory.makeIsGitRemoteSetup({ fs, cwd: process.cwd });
+const addGitRemote = gitFactory.makeAddGitRemote({ spawn });
+const removeGitRemote = gitFactory.makeRemoveGitRemote({ spawn });
 
-    switch (command) {
-      case 'init-repo':
-        initRepo();
-        break;
-      case 'help':
-      default:
-        printHelp();
-    }
-  } catch (e) {
-    status(Error(`Command \`${process.argv[2]}\` not recognized.`), true);
-    printHelp();
-  }
-};
+// lib/ask.js
+const ask = require('./lib/ask').makeAsk({ readline });
 
-module.exports = { makeMain };
+// lib/config.js
+const readConfig = require('./lib/config').makeReadConfig({
+  fs,
+  cwd: process.cwd,
+  exit: process.exit,
+});
+
+const writeConfig = require('./lib/config').makeWriteConfig({
+  fs,
+  cwd: process.cwd,
+  exit: process.exit,
+});
+
+const getProjectName = require('./lib/config').makeGetProjectName({
+  status,
+  ask,
+  readConfig,
+  writeConfig,
+});
+
+// routes/init.js
+const initRepo = require('./routes/init').makeInitRepo({
+  isGitInstalled,
+  isInGitRepo,
+  isGitRemoteSetup,
+  addGitRemote,
+  removeGitRemote,
+  status,
+  ask,
+  getProjectName,
+  exit: process.exit,
+});
+
+// router.js
+const router = require('./router').makeRouter({
+  commandLineCommands,
+  status,
+  initRepo,
+});
+
+router();
