@@ -6,7 +6,7 @@ const makeAsk = ({ readline }) => (question, default_) => new Promise((resolve) 
     output: process.stdout,
   });
 
-  let output = colors.bold(`${question} `);
+  let output = colors.bold(`  ? ${question} `);
 
   if (default_) {
     output += colors.gray(`(${default_}) `);
