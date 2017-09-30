@@ -1,6 +1,4 @@
-const path = require('path');
-
-const makeInit = ({ git, ask, status }) => async () => {
+const makeInit = ({ git, status, getProjectName }) => async () => {
   if (!git.isInstalled()) {
     status(Error('Git is not installed'), true);
     status(Error('Please install git to continue'), false);
@@ -14,12 +12,7 @@ const makeInit = ({ git, ask, status }) => async () => {
     process.exit(1);
   }
 
-  const projectName = await ask('Project Name', path.basename(process.cwd()));
-
-  if (projectName.includes('/')) {
-    status(Error('Your project name can not contain a /'), true);
-    process.exit(1);
-  }
+  const projectName = await getProjectName();
 
   status('Checking status of current git repo...');
 
@@ -31,11 +24,9 @@ const makeInit = ({ git, ask, status }) => async () => {
     } catch (e) {
       status('Something went wrong while executing a git command, this is what I got:', true);
       status(e);
-      // console.error(e);
+      process.exit(1);
     }
   }
-
-  console.log(projectName);
 };
 
 module.exports = { makeInit };

@@ -19,7 +19,16 @@ const git = {
 
 const ask = require('./src/ask').makeAsk({ readline });
 
-const init = require('./src/init').makeInit({ git, ask, status });
+const readConfig = require('./src/config').makeReadConfig({ fs, cwd: process.cwd });
+const writeConfig = require('./src/config').makeWriteConfig({ fs, cwd: process.cwd });
+
+const getProjectName = require('./src/config').makeGetProjectName({
+  status, ask, readConfig, writeConfig,
+});
+
+const init = require('./src/init').makeInit({
+  git, ask, status, readConfig, writeConfig, getProjectName,
+});
 
 const main = require('./src/index').makeMain({
   commandLineCommands,

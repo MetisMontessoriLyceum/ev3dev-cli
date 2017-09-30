@@ -8,8 +8,6 @@ const makeIsInRepo = ({ fs, cwd }) => () =>
 const makeIsSetup = ({ fs, cwd }) => () => {
   const gitConfig = fs.readFileSync(path.join(cwd(), '.git/config')).toString('utf-8');
 
-  console.log(gitConfig);
-
   return /^\[remote "ev3dev"\]$/m.test(gitConfig);
 };
 
