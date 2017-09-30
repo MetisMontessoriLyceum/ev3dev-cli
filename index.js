@@ -15,6 +15,7 @@ const git = {
   isInGitRepo: gitFactory.makeIsInRepo({ fs, cwd: process.cwd }),
   isSetup: gitFactory.makeIsSetup({ fs, cwd: process.cwd }),
   addRemote: gitFactory.makeAddRemote({ spawn }),
+  removeRemote: gitFactory.makeRemoveRemote({ spawn }),
 };
 
 const ask = require('./src/ask').makeAsk({ readline });
@@ -26,13 +27,17 @@ const getProjectName = require('./src/config').makeGetProjectName({
   status, ask, readConfig, writeConfig,
 });
 
-const init = require('./src/init').makeInit({
-  git, ask, status, readConfig, writeConfig, getProjectName,
+const initRepo = require('./src/init').makeInitRepo({
+  git,
+  status,
+  ask,
+  getProjectName,
 });
 
 const main = require('./src/index').makeMain({
   commandLineCommands,
-  init,
+  status,
+  initRepo,
 });
 
 main();

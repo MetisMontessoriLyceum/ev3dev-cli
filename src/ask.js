@@ -1,6 +1,6 @@
 const colors = require('colors');
 
-const makeAsk = ({ readline }) => (question, default_) => new Promise((resolve) => {
+const makeAsk = ({ readline }) => (question, options) => new Promise((resolve) => {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -8,14 +8,16 @@ const makeAsk = ({ readline }) => (question, default_) => new Promise((resolve) 
 
   let output = colors.bold(`  ? ${question} `);
 
-  if (default_) {
-    output += colors.gray(`(${default_}) `);
+  if (options.help) {
+    output += colors.gray(`[${options.help}] `);
+  } else if (options.default) {
+    output += colors.gray(`(${options.default}) `);
   }
 
   rl.question(output, (answer) => {
     rl.close();
     if (answer.trim() === '') {
-      resolve(default_ || answer);
+      resolve(options.default || answer);
     }
 
     resolve(answer);

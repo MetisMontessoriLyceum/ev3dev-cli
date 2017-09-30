@@ -15,7 +15,7 @@ const makeGetProjectName = ({
       process.exit(1);
     }
   } catch (e) {
-    projectName = await ask('Project Name', path.basename(process.cwd()));
+    projectName = await ask('Project Name', { default: path.basename(process.cwd()) });
     status('Saving project name in ev3dev.yml', true);
     writeConfig({ project: { name: projectName } });
   }

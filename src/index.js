@@ -10,8 +10,8 @@ const printHelp = () => {
       header: 'Command List',
       content: [
         {
-          name: 'init',
-          description: 'Set up the current git repository and the connected ev3dev robot',
+          name: 'init-repo',
+          description: 'Set up the current git repository',
         },
         {
           name: 'help',
@@ -22,16 +22,21 @@ const printHelp = () => {
   ]));
 };
 
-const makeMain = ({ commandLineCommands, init }) => () => {
-  const { command } = commandLineCommands([null, 'init', 'help']);
+const makeMain = ({ commandLineCommands, status, initRepo }) => () => {
+  try {
+    const { command } = commandLineCommands([null, 'init-repo', 'help']);
 
-  switch (command) {
-    case 'init':
-      init();
-      break;
-    case 'help':
-    default:
-      printHelp();
+    switch (command) {
+      case 'init-repo':
+        initRepo();
+        break;
+      case 'help':
+      default:
+        printHelp();
+    }
+  } catch (e) {
+    status(Error(`Command \`${process.argv[2]}\` not recognized.`), true);
+    printHelp();
   }
 };
 
