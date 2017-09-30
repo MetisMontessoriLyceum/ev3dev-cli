@@ -1,7 +1,7 @@
 .nexe
 nloomans-ev3dev
 
-# Created by https://www.gitignore.io/api/node
+# Created by https://www.gitignore.io/api/node,vagrant
 
 ### Node ###
 # Logs
@@ -64,4 +64,7 @@ typings/
 .env
 
 
-# End of https://www.gitignore.io/api/node
+### Vagrant ###
+.vagrant/
+
+# End of https://www.gitignore.io/api/node,vagrant

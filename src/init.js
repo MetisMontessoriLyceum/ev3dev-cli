@@ -1,22 +1,19 @@
-const readline = require('readline');
-const colors = require('colors');
+const path = require('path');
 
-const ask = (question, default_) => new Promise((resolve) => {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-
-  let output = colors.bold(`${question} `);
-
-  if (default_) {
-    output += colors.gray(`(${default_}) `);
+const makeInit = ({ git, ask }) => async () => {
+  if (!git.isInstalled()) {
+    console.error('Git is not installed.');
+    return;
   }
 
-  rl.question(output, (answer) => {
-    rl.close();
-    resolve(answer);
-  });
-});
+  if (!await git.isInGitRepo()) {
+    console.error('Not in a git repo.');
+    return;
+  }
 
-ask('hi there', 'pizza').then((answer) => { console.log(`you said ${answer}`); });
+  const projectName = await ask('Project Name', path.basename(process.cwd()));
+
+  console.log(projectName);
+};
+
+module.exports = { makeInit };

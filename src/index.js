@@ -1,7 +1,6 @@
 const commandLineUsage = require('command-line-usage');
-const commandLineCommands = require('command-line-commands');
 
-function printHelp() {
+const printHelp = () => {
   console.log(commandLineUsage([
     {
       header: 'nloomans\'s ev3dev cli tool',
@@ -21,19 +20,19 @@ function printHelp() {
       ],
     },
   ]));
-}
+};
 
-function main() {
+const makeMain = ({ commandLineCommands, init }) => () => {
   const { command } = commandLineCommands([null, 'init', 'help']);
 
   switch (command) {
     case 'init':
-      console.log('will be implemented soon');
+      init();
       break;
     case 'help':
     default:
       printHelp();
   }
-}
+};
 
-module.exports = { main };
+module.exports = { makeMain };

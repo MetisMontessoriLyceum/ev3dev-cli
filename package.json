@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "colors": "^1.1.2",
+    "command-exists": "^1.2.2",
     "command-line-args": "^4.0.7",
     "command-line-commands": "^2.0.1",
     "command-line-usage": "^4.0.1",
