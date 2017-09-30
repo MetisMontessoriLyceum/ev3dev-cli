@@ -1,5 +1,6 @@
 .nexe
-nloomans-ev3dev
+ev3dev.yml
+ev3dev
 
 # Created by https://www.gitignore.io/api/node,vagrant
 
