@@ -1,0 +1,17 @@
+name: hetmml-ev3dev
+version: git
+summary: "[WIP] ev3dev-cli"
+description: "[WIP] ev3dev-cli"
+grade: devel
+confinement: classic
+
+apps:
+  hetmml-ev3dev:
+    command: bin/ev3dev
+
+parts:
+  hetmml-ev3dev:
+    plugin: nodejs
+    node-engine: 8.5.0
+    node-packages:
+      - "@hetmml/ev3dev-cli"
