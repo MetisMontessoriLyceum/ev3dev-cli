@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  * Copyright (C) 2017  Noah Loomans
  *

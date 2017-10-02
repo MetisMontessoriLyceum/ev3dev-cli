@@ -1,9 +1,12 @@
 {
-  "name": "nloomans-ev3dev",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "@hetmml/ev3dev-cli",
+  "version": "0.0.1",
+  "main": "src/index.js",
   "scripts": {
     "build": "nexe -i src/index.js --fakeArgv -o ev3dev"
+  },
+  "bin": {
+    "ev3dev": "src/index.js"
   },
   "license": "GPL-3.0",
   "dependencies": {
@@ -18,5 +21,15 @@
   "devDependencies": {
     "eslint-config-airbnb-base": "^12.0.1",
     "eslint-plugin-import": "^2.7.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/nloomans/nloomans-ev3dev.git"
+  },
+  "author": "Noah Loomans <noahloomans@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/nloomans/nloomans-ev3dev/issues"
+  },
+  "homepage": "https://github.com/nloomans/nloomans-ev3dev#readme",
+  "description": ""
 }
