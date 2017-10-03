@@ -17,33 +17,31 @@
 
 const colors = require('colors');
 
-module.exports = (text_, isImportant) => {
-  const isError = text_ instanceof Error;
-
-  let text;
-  if (isError) {
-    text = text_.message;
-  } else {
-    text = text_;
+function status(options) {
+  if (options instanceof Array) {
+    options.forEach(options_ => status(options_));
+    return;
   }
 
   let message = '';
 
-  if (isImportant) {
+  if (options.important) {
     message += '==> ';
   } else {
     message += '    ';
   }
 
-  message += text;
+  message += options.text;
 
-  if (isError) {
+  if (options.error) {
     message = colors.red(message);
   }
 
-  if (isImportant) {
+  if (options.important) {
     message = colors.bold(message);
   }
 
   console.log(message);
-};
+}
+
+module.exports = status;

@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+const strings = require('./strings');
 const commandLineUsage = require('command-line-usage');
 
 function printHelp() {
@@ -40,7 +41,7 @@ function printHelp() {
 }
 
 module.exports.makeRouter = ({ commandLineCommands, status, initRepo }) => () => {
-  status('version: v0.0.1');
+  status(strings.info.version);
 
   try {
     const { command } = commandLineCommands([null, 'init-repo', 'help']);
@@ -54,7 +55,7 @@ module.exports.makeRouter = ({ commandLineCommands, status, initRepo }) => () =>
         printHelp();
     }
   } catch (e) {
-    status(Error(`Command \`${process.argv[2]}\` not recognized.`), true);
+    status(strings.error.commandNotRecognized(process.argv[2]));
     printHelp();
   }
 };
