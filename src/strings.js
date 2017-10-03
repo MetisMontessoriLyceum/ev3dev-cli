@@ -14,6 +14,7 @@ module.exports = {
     yamlMalformed: { text: 'ev3dev.yml is malformed', error: true },
     yamlMalformedReason: { projectName: { text: 'project.name is not a string', error: true } },
     commandNotRecognized: command => ({ text: `Command \`${command}\` not recognized.`, error: true, important: true }),
+    yalmNotThere: { text: 'Unable to open ev3dev.yml', error: true, important: true },
   },
   info: {
     version: { text: 'version: v0.0.1' },

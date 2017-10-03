@@ -17,41 +17,6 @@
 
 const path = require('path');
 const yaml = require('js-yaml');
-const strings = require('../strings');
-
-module.exports.makeGetProjectName = ({
-  status,
-  ask,
-  readConfig,
-  writeConfig,
-  exit,
-}) => async () => {
-  let projectName;
-  try {
-    projectName = readConfig().project.name;
-    status(strings.info.usingYaml);
-
-    if (typeof projectName !== 'string') {
-      status(strings.error.yamlMalformed);
-      status(strings.error.yamlMalformedReason.projectName);
-      exit(1);
-    }
-  } catch (e) {
-    projectName = await ask('Project Name', { default: path.basename(process.cwd()) });
-    // status('Saving project name in ev3dev.yml', true);
-    writeConfig({ project: { name: projectName } });
-  }
-
-  if (projectName.includes('/') || projectName.includes('\0')) {
-    // status(Error('Your project name can not contain a / or a null byte'), true);
-    exit(1);
-  }
-
-  return projectName;
-};
 
 module.exports.makeReadConfig = ({ fs, cwd }) => () =>
-  yaml.safeLoad(fs.readFileSync(path.join(cwd(), 'ev3dev.yml'), 'utf-8'));
-
-module.exports.makeWriteConfig = ({ fs, cwd }) => config =>
-  fs.writeFileSync(path.join(cwd(), 'ev3dev.yml'), yaml.safeDump(config));
+  yaml.safeLoad(fs.readFileSync(path.join(cwd(), 'ev3dev.yaml'), 'utf-8'));

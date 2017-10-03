@@ -28,8 +28,8 @@ function printHelp() {
       header: 'Command List',
       content: [
         {
-          name: 'init-repo',
-          description: 'Set up the current git repository',
+          name: 'upload',
+          description: 'Upload the current folder to the robot',
         },
         {
           name: 'help',
@@ -40,15 +40,23 @@ function printHelp() {
   ]));
 }
 
-module.exports.makeRouter = ({ commandLineCommands, status, initRepo }) => () => {
+module.exports.makeRouter = ({
+  commandLineCommands,
+  status,
+  initRepo,
+  upload,
+}) => () => {
   status(strings.info.version);
 
   try {
-    const { command } = commandLineCommands([null, 'init-repo', 'help']);
+    const { command } = commandLineCommands([null, 'init-repo', 'upload', 'help']);
 
     switch (command) {
       case 'init-repo':
         initRepo();
+        break;
+      case 'upload':
+        upload();
         break;
       case 'help':
       default:

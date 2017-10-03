@@ -1,0 +1,8 @@
+project:
+  name: vagrant
+  ignore:
+    - .git
+    - .nexe
+    - .vagrant
+    - snap
+    - node_modules
